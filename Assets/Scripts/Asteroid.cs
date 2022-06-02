@@ -35,4 +35,13 @@ public class Asteroid : MonoBehaviour, IObstacle
     {
         DisableObstacle(timeLives);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        var ship = collision.gameObject.GetComponentInParent<InputController>();
+        if(ship)
+        {
+            gameObject.SetActive(false);
+            Destroy(ship.gameObject);
+        }
+    }
 }

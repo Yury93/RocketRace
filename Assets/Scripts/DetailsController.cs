@@ -7,6 +7,7 @@ public class DetailsController : MonoBehaviour
 {
     [SerializeField] private Detail prefabDetail;
     [SerializeField] private List<Detail> detailes;
+    public List<Detail> Details => detailes;
     [SerializeField] private int countDetailes;
     [SerializeField] private float partGap;
     private Vector3 posNewDetail;
@@ -18,7 +19,6 @@ public class DetailsController : MonoBehaviour
     {
         startTimer = timer;
         posNewDetail = transform.position;
-
         for (int i = 0; i < countDetailes; i++)
         {
             SpawnDetail(posNewDetail);
@@ -30,25 +30,27 @@ public class DetailsController : MonoBehaviour
         posNewDetail = new Vector3(pos.x, pos.y, pos.z - partGap);
         detailes.Add(detail);
     }
-    public void FixedUpdate()
+    public void Update()
     {
         if (detailes.Count > 0)
         {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                detailes[detailes.Count-1].DisActivated(false);
-                OnBranchDetails?.Invoke();
+                print(detailes.Count - 1);
                 RemoveDetails(detailes.Count-1);
+               
                 timer = startTimer;
             }
         }
     }
     public void RemoveDetails(int i)
     {
-        if (detailes.Count > 0)
-        {
-            detailes.RemoveAt(i);
-        }
+        print(i);
+        detailes[i].DisActivated(false);
+       
+        detailes.RemoveAt(i);
+        OnBranchDetails?.Invoke();
+        //OnBranchDetails?.Invoke();
     }
 }
