@@ -21,6 +21,14 @@ public class Ship : MonoBehaviour
          
             if (distance <= pointFinish)
             {
+                if (gameObject.GetComponent<InputController>())
+                {
+                    SceneController.Instance.SceneWin();
+                }
+                else
+                {
+                    SceneController.Instance.SceneLose();
+                }
                 finish = true;
             }
         }

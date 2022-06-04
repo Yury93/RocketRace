@@ -5,13 +5,14 @@ using DG.Tweening;
 
 public class AIShip : Ship
 {
-    [SerializeField] private float speed;
+   [SerializeField]private float speed;
     [SerializeField] private float timer;
     private float startTimer;
 
     private void Start()
     {
         startTimer = timer;
+        speed = Random.Range(15, 35);
     }
 
    private void Update()
@@ -23,7 +24,7 @@ public class AIShip : Ship
             if (timer < 0)
             {
 
-                //timer = startTimer;
+                timer = startTimer;
             }
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour, IObstacle
 {
+    [SerializeField] private AudioSource explosion;
     [SerializeField] private float timeLives;
     [SerializeField] private float speed;
     private float startSpeed;
@@ -40,8 +41,11 @@ public class Asteroid : MonoBehaviour, IObstacle
         var ship = collision.gameObject.GetComponentInParent<InputController>();
         if(ship)
         {
-            gameObject.SetActive(false);
+            EffectContainer.Instance.CreateExplosion(collision.gameObject.transform.position);
+
+            explosion.Play();
             Destroy(ship.gameObject);
+            SceneController.Instance.SceneLose();
         }
     }
 }

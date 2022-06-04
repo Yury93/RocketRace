@@ -7,12 +7,17 @@ public class Detail : MonoBehaviour
 {
     [SerializeField] private GameObject childObj;
     [SerializeField] private float speedForward,speedOffset;
-
+    [SerializeField] private float timeLives;
     private float speedRotate;
     private DetailsController controller;
     public bool Active { get; private set; }
     private Animator anim;
     private InputController inputController;
+    bool menu;
+    public void SetMenu()
+    {
+        menu = true;
+    }
     private void Start()
     {
         Active = true;
@@ -38,19 +43,27 @@ public class Detail : MonoBehaviour
         {
             if (gameObject)
             {
+
                 if (inputController)
                 {
                     inputController.SetSpeed(-speedForward, -speedOffset);
                 }
-                anim.enabled = true;
-                gameObject.transform.parent = null;
-                Destroy(gameObject, 2F);
+                if (!menu)
+                {
+                    anim.enabled = true;
+                    gameObject.transform.parent = null;
+                    Destroy(gameObject, timeLives);
+                }
             }
         }
     }
     public void DisActivated(bool isActive)
     {
         Active = isActive;
+    }
+    public void SetTimeLives(float time)
+    {
+        timeLives = time;
     }
     
     private void OnDestroy()

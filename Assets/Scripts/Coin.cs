@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private AudioSource cash;
     [SerializeField] private float timeLives;
    [SerializeField] private int speed,rotateSpeed;
     [SerializeField] private GameObject childObj;
@@ -27,7 +28,10 @@ public class Coin : MonoBehaviour
         var ship = other.GetComponentInParent<InputController>();
         if(ship)
         {
-            
+            EffectContainer.Instance.GetVectorSpawn(gameObject.transform.position);
+            EffectContainer.Instance.GetFreeElement();
+            ship.GetComponentInChildren<AudioSource>().Play();
+            UIController.Instance.AddScore(1);
             gameObject.SetActive(false);
         }
     }
