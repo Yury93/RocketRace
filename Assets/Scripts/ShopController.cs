@@ -11,6 +11,7 @@ public class ShopController : MonoBehaviour
     [SerializeField] private int countDetails;
     private Vector3 posNewDetail;
     [SerializeField] private Text generalCash;
+
     void Start()
     {
         posNewDetail = detailsController.transform.position;
@@ -22,14 +23,7 @@ public class ShopController : MonoBehaviour
         countDetails = PlayerPrefs.GetInt("CountDetails");
         PlayerPrefs.SetInt("GeneralScore", generalScore);
 
-        if (countDetails > 0)
-        {
-            PlayerPrefs.SetFloat("x", posNewDetail.x);
-            PlayerPrefs.SetFloat("y", posNewDetail.y);
-            PlayerPrefs.SetFloat("z", posNewDetail.z);
-            posNewDetail = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
-        }
-        if(generalScore < 15)
+        if (generalScore < 15)
         {
             buttonBuy.interactable = false;
         }
@@ -41,6 +35,11 @@ public class ShopController : MonoBehaviour
 
     public void BuyDetail(int cash)
     {
+        if (PlayerPrefs.HasKey("x"))
+        {
+            posNewDetail = new Vector3(PlayerPrefs.GetFloat("x"), PlayerPrefs.GetFloat("y"), PlayerPrefs.GetFloat("z"));
+        }
+
         generalScore -= cash;
         PlayerPrefs.SetInt("GeneralScore",generalScore);
         countDetails += 1;
@@ -53,8 +52,8 @@ public class ShopController : MonoBehaviour
        
         posNewDetail = new Vector3(posNewDetail.x, posNewDetail.y, posNewDetail.z - detailsController.PartGap);
         PlayerPrefs.SetFloat("x", posNewDetail.x);
-        PlayerPrefs.SetFloat("y", posNewDetail.x);
-        PlayerPrefs.SetFloat("z", posNewDetail.x);
+        PlayerPrefs.SetFloat("y", posNewDetail.y);
+        PlayerPrefs.SetFloat("z", posNewDetail.z);
         if (generalScore < cash)
         {
             buttonBuy.interactable = false;
@@ -64,9 +63,5 @@ public class ShopController : MonoBehaviour
             buttonBuy.interactable = true;
         }
         generalCash.text = $"{generalScore}$";
-    }
-    void Update()
-    {
-        
     }
 }

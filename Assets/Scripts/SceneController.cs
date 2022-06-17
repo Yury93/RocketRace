@@ -32,4 +32,9 @@ public class SceneController : SingletonBase<SceneController>
             SceneManager.LoadScene(menu);
         }
     }
+    public void SceneMenuButton()
+    {
+            SceneManager.LoadScene(menu);
+        
+    }
 }

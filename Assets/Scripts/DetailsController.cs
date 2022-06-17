@@ -37,7 +37,7 @@ public class DetailsController : MonoBehaviour
     public void SpawnDetail(Vector3 pos)
     {
         
-            var detail = Instantiate(prefabDetail, pos, Quaternion.identity, gameObject.transform);
+            var detail = Instantiate(prefabDetail, pos, Quaternion.identity, this.gameObject.transform);
         if (menu)
         {
             detail.SetMenu();
