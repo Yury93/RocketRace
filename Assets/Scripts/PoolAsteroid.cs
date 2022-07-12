@@ -7,7 +7,8 @@ public class PoolAsteroid : PoolObjects<Asteroid>
     [SerializeField] private Transform player;
     [SerializeField] private float distanceOfPlayer;
     [SerializeField] private float timeAplications;
-    [SerializeField] private float radius;
+    [SerializeField] private float maxRadius;
+    private float radius;
     private float startTime;
     private void Start()
     {
@@ -23,8 +24,9 @@ public class PoolAsteroid : PoolObjects<Asteroid>
                 transform.position = new Vector3(player.transform.position.x,
                     player.transform.position.y,
                     player.transform.position.z + distanceOfPlayer);
-                GetVectorSpawn(RandomCircle(transform.position, this.radius));
-                GetFreeElement();
+                    radius = UnityEngine.Random.Range(1, maxRadius);
+                    GetVectorSpawn(RandomCircle(transform.position, radius));
+                    GetFreeElement();
                 timeAplications = startTime;
             }
         }
@@ -35,7 +37,7 @@ public class PoolAsteroid : PoolObjects<Asteroid>
         Vector3 pos = new Vector3();
         pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
         pos.y = center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-        pos.z = center.z + radius * Mathf.Tan(ang * Mathf.Deg2Rad);
+        pos.z = center.z /*+ radius * Mathf.Tan(ang * Mathf.Deg2Rad)*/;
         return pos;
     }
     private void OnDrawGizmosSelected()
